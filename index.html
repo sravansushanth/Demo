@@ -3,11 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Us Form</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for invalid input fields */
+        .invalid-field {
+            border-color: #ef4444; /* red-500 */
+            --tw-ring-color: #ef4444;
+        }
+        .valid-field {
+            border-color: #22c55e; /* green-500 */
+        }
+    </style>
 </head>
-<body>
-    <h1>heloo</h1>
-    <h1>HI</h1>
-    <button>signin<button>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Form Container -->
+    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-2xl w-full">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 text-center mb-6">
+            Contact Us
+        </h1>
+        <p class="text-center text-gray-600 mb-8">
+            Please fill out the form below to get in touch with our team.
+        </p>
+
+        <!-- Form with Client-Side Validation -->
+        <form id="contact-form" class="space-y-6" novalidate>
+
+            <!-- Name and Email Section -->
+            <div class="grid md:grid-cols-2 md:gap-6">
+                <div>
+                    <label for="name" class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                    <input type="text" id="name" name="name" required
+                           class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+                           placeholder="John Doe">
+                    <p class="text-red-500 text-xs mt-1 h-4" id="name-error"></p>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+                           placeholder="you@example.com">
+                    <p class="text-red-500 text-xs mt-1 h-4" id="email-error"></p>
+                </div>
+            </div>
+
+            <!-- Phone Number and Subject Section -->
+            <div class="grid md:grid-cols-2 md:gap-6">
+                <div>
+                    <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number (Optional)</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-?[0-9]{3}-?[0-9]{4}"
+                           class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+                           placeholder="123-456-7890">
+                    <p class="text-red-500 text-xs mt-1 h-4" id="phone-error"></p>
+                </div>
+                <div>
+                    <label for="subject" class="block text-gray-700 font-semibold mb-2">Subject</label>
+                    <select id="subject" name="subject" required
+                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300">
+                        <option value="">Select a Subject</option>
+                        <option value="general-inquiry">General Inquiry</option>
+                        <option value="support-request">Support Request</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+                    <p class="text-red-500 text-xs mt-1 h-4" id="subject-error"></p>
+                </div>
+            </div>
+
+            <!-- Message Section -->
+            <div>
+                <label for="message" class="block text-gray-700 font-semibold mb-2">Your Message</label>
+                <textarea id="message" name="message" rows="5" required
+                          class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+                          placeholder="Enter your message here..."></textarea>
+                <p class="text-red-500 text-xs mt-1 h-4" id="message-error"></p>
+            </div>
+
+            <!-- Checkbox for agreement -->
+            <div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="agreement" name="agreement" required
+                           class="h-5 w-5 rounded text-blue-600 border-gray-300 focus:ring-blue-500">
+                    <label for="agreement" class="ml-2 text-sm text-gray-600">
+                        I agree to the <a href="#" class="text-blue-600 hover:underline">terms and conditions</a>.
+                    </label>
+                </div>
+                <p class="text-red-500 text-xs mt-1 h-4" id="agreement-error"></p>
+            </div>
+
+            <!-- Submission Button -->
+            <div>
+                <button type="submit" id="submit-button"
+                        class="w-full px-6 py-3 rounded-lg bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 flex items-center justify-center disabled:bg-blue-400">
+                    <span id="button-text">Submit</span>
+                    <svg id="button-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Message box for success/error -->
+            <div id="message-box" class="mt-4 p-4 rounded-lg text-center hidden"></div>
+
+        </form>
+
+    </div>
+
+    <script>
+        const form = document.getElementById('contact-form');
+        const messageBox = document.getElementById('message-box');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const buttonSpinner = document.getElementById('button-spinner');
+
+        // Object to hold validation functions and error messages
+        const validators = {
+            name: {
+                validate: (value) => value.trim() !== '',
+                message: 'Full Name is required.'
+            },
+            email: {
+                validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+                message: 'Please enter a valid email address.'
+            },
+            phone: {
+                validate: (value) => value === '' || /^[0-9]{3}-?[0-9]{3}-?[0-9]{4}$/.test(value),
+                message: 'Please enter a valid phone number (e.g., 123-456-7890).'
+            },
+            subject: {
+                validate: (value) => value !== '',
+                message: 'Please select a subject.'
+            },
+            message: {
+                validate: (value) => value.trim() !== '',
+                message: 'Your Message is required.'
+            },
+            agreement: {
+                validate: (checked) => checked,
+                message: 'You must agree to the terms.'
+            }
+        };
+
+        // Function to show/hide error for a field
+        const handleValidation = (field, input) => {
+            const value = input.type === 'checkbox' ? input.checked : input.value;
+            const isValid = validators[field].validate(value);
+            const errorElement = document.getElementById(`${field}-error`);
+
+            if (!isValid) {
+                errorElement.textContent = validators[field].message;
+                input.classList.add('invalid-field');
+                input.classList.remove('valid-field');
+            } else {
+                errorElement.textContent = '';
+                input.classList.remove('invalid-field');
+                if (value) input.classList.add('valid-field');
+                else input.classList.remove('valid-field');
+            }
+            return isValid;
+        };
+
+        // Add real-time validation listeners
+        Object.keys(validators).forEach(field => {
+            const input = form.elements[field];
+            if (input) {
+                input.addEventListener('input', () => handleValidation(field, input));
+                input.addEventListener('blur', () => handleValidation(field, input));
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let isFormValid = true;
+            Object.keys(validators).forEach(field => {
+                const input = form.elements[field];
+                if (input) {
+                    const isValid = handleValidation(field, input);
+                    if (!isValid) isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                // Show loading state
+                submitButton.disabled = true;
+                buttonText.textContent = 'Submitting...';
+                buttonSpinner.classList.remove('hidden');
+                messageBox.classList.add('hidden');
+
+                // Simulate form submission
+                setTimeout(() => {
+                    // Show success message
+                    messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                    messageBox.classList.add('bg-green-100', 'text-green-800');
+                    messageBox.innerHTML = '<strong>Success!</strong> Your message has been sent.';
+
+                    // Reset button
+                    submitButton.disabled = false;
+                    buttonText.textContent = 'Submit';
+                    buttonSpinner.classList.add('hidden');
+
+                    // Reset form and validation styles
+                    form.reset();
+                    Object.keys(validators).forEach(field => {
+                        const input = form.elements[field];
+                        input.classList.remove('valid-field', 'invalid-field');
+                    });
+                }, 2000); // Simulate 2-second delay
+            } else {
+                messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+                messageBox.innerHTML = '<strong>Error!</strong> Please fix the issues above.';
+            }
+        });
+    </script>
 </body>
 </html>
